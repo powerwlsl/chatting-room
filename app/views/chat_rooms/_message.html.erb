@@ -8,7 +8,7 @@
 			<div class="col-md-11">
 				<p class="card-text">
 					<span class="text-muted">
-						<%= message.user.name %> at <%= message.times %> says <br>
+						<%= message.user.name %> at <%= message.timestamp %> says <br>
 					</span>
 					<%= message.body %>
 				</p>
@@ -16,3 +16,6 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- In this partial three new methods are employed: user.name, message.timestamp and gravatar_for. To construct a name, let’s simply strip off the domain part from the user’s email (of course, in a real app you’d want to allow them entering a name upon registration or at the “Edit profile” page): -->
