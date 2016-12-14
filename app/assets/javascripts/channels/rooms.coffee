@@ -1,7 +1,9 @@
 jQuery(document).on 'turbolinks:load', ->
   messages = $('#messages')
   if $('#messages').length > 0
+    messages_to_bottom = -> messages.scrollTop(messages.prop("scrollHeight"))
 
+    messages_to_bottom()
     App.global_chat = App.cable.subscriptions.create {
         channel: "ChatRoomsChannel"
         chat_room_id: messages.data('chat-room-id')
@@ -13,8 +15,8 @@ jQuery(document).on 'turbolinks:load', ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        # Data received
-
+        messages.append data['message']
+        messages_to_bottom()
       send_message: (message, chat_room_id) ->
         @perform 'send_message', message: message, chat_room_id: chat_room_id
 
@@ -28,6 +30,6 @@ jQuery(document).on 'turbolinks:load', ->
         textarea.val('')
       e.preventDefault()
       return false
-      
+
 # When the form is submitted, take the message’s body, check that its length is at least two and then call the send_message function to broadcast the new message to all visitors of the chat room. Next, clear the textarea and prevent form submission.
 
